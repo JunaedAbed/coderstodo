@@ -15,7 +15,13 @@
     "commands": [
       {
         "command": "coderstodo.helloWorld",
+        "category": "CodersTodo",
         "title": "Hello World"
+      },
+      {
+        "command": "coderstodo.askQuestion",
+        "category": "CodersTodo",
+        "title": "Ask Question"
       }
     ]
   },
