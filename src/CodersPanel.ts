@@ -28,7 +28,7 @@ export class CodersPanel {
     // Otherwise, create a new panel.
     const panel = vscode.window.createWebviewPanel(
       CodersPanel.viewType,
-      "VSinder",
+      "CodersTodo",
       column || vscode.ViewColumn.One,
       {
         // Enable javascript in the webview
@@ -125,7 +125,7 @@ export class CodersPanel {
   private _getHtmlForWebview(webview: vscode.Webview) {
     // And the uri we use to load this script in the webview
     const scriptUri = webview.asWebviewUri(
-      vscode.Uri.joinPath(this._extensionUri, "media", "main.js")
+      vscode.Uri.joinPath(this._extensionUri, "out/compiled", "HelloWorld.js")
     );
 
     // Uri to load styles into webview
@@ -150,7 +150,7 @@ export class CodersPanel {
                 Use a content security policy to only allow loading images from https or from our extension directory,
                 and only allow scripts that have a specific nonce.
             -->
-            <meta http-equiv="Content-Security-Policy" content="img-src https: data:; style-src 'unsafe-inline' ${webview.cspSource}; script-src 'nonce-${nonce}';">
+            <meta http-equiv="Content-Security-Policy" content="img-src https: data:; style-src 'unsafe-inline' ${webview.cspSource}; script-src  'nonce-${nonce}';">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
                     <link href="${stylesResetUri}" rel="stylesheet">
                     <link href="${stylesMainUri}" rel="stylesheet">
@@ -158,10 +158,7 @@ export class CodersPanel {
                 
             </script>
                 </head>
-                <body>
-                <h1>Hello World</h1>
-                <input />
-                <button>Hello</button>
+                <body>               
                 </body>
                 <script src="${scriptUri}" nonce="${nonce}">
 
