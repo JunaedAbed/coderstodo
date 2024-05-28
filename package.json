@@ -22,6 +22,11 @@
         "command": "coderstodo.askQuestion",
         "category": "CodersTodo",
         "title": "Ask Question"
+      },
+      {
+        "command": "coderstodo.refresh",
+        "category": "CodersTodo",
+        "title": "Refresh"
       }
     ]
   },
