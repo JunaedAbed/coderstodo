@@ -1,11 +1,23 @@
 <script lang="ts">
-  let todos = [];
+  let todos: Array<{ text: string; completed: boolean }> = [];
   let text = "";
 </script>
 
-<input bind:value={text} />
+<form
+  on:submit={(e) => {
+    e.preventDefault();
+    todos = [{ text, completed: false }, ...todos];
+    text = "";
+  }}
+>
+  <input bind:value={text} />
+</form>
 
-<div>Text: {text}</div>
+<ul>
+  {#each todos as todo (todo.text)}
+    <li>{todo.text}</li>
+  {/each}
+</ul>
 
 <style>
 </style>
