@@ -2,9 +2,16 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
 import { CodersPanel } from "./CodersPanel";
+import { SidebarProvider } from "./SidebarProvider";
 
 export function activate(context: vscode.ExtensionContext) {
-  console.log('Congratulations, your extension "coderstodo" is now active!');
+  const sidebarProvider = new SidebarProvider(context.extensionUri);
+  context.subscriptions.push(
+    vscode.window.registerWebviewViewProvider(
+      "coderstodo-sidebar",
+      sidebarProvider
+    )
+  );
 
   context.subscriptions.push(
     vscode.commands.registerCommand("coderstodo.helloWorld", () => {
@@ -13,9 +20,18 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   context.subscriptions.push(
-    vscode.commands.registerCommand("coderstodo.refresh", () => {
-      CodersPanel.kill();
-      CodersPanel.createOrShow(context.extensionUri);
+    vscode.commands.registerCommand("coderstodo.refresh", async () => {
+      // CodersPanel.kill();
+      // CodersPanel.createOrShow(context.extensionUri);
+      await vscode.commands.executeCommand("workbench.action.closeSidebar");
+      await vscode.commands.executeCommand(
+        "workbench.view.extension.coderstodo-sidebar-view"
+      );
+      // setTimeout(() => {
+      //   vscode.commands.executeCommand(
+      //     "workbench.action.webview.openDeveloperTools"
+      //   );
+      // }, 500);
     })
   );
 
