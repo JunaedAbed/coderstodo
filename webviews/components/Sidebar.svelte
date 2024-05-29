@@ -18,6 +18,7 @@
     <li>
       <button
         type="button"
+        class="list-button"
         class:complete={todo.completed}
         on:click={() => {
           todo.completed = !todo.completed;
@@ -29,12 +30,34 @@
   {/each}
 </ul>
 
+<!-- svelte-ignore missing-declaration -->
+<button
+  on:click={() => {
+    vscodeapi.postMessage({
+      command: "onInfo",
+      value: "info message",
+    });
+  }}
+  >Click Me
+</button>
+
+<!-- svelte-ignore missing-declaration -->
+<button
+  on:click={() => {
+    vscodeapi.postMessage({
+      command: "onError",
+      value: "info message",
+    });
+  }}
+  >Click Me
+</button>
+
 <style>
   .complete {
     text-decoration: line-through;
   }
 
-  button {
+  .list-button {
     background: none;
     border: none;
     padding: 0;
@@ -46,11 +69,11 @@
     color: #ffffff;
   }
 
-  button:focus {
+  .list-button:focus {
     outline: none;
   }
 
-  button.complete {
+  .list-button.complete {
     color: grey;
   }
 </style>
