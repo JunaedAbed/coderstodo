@@ -1,6 +1,27 @@
 <script lang="ts">
+  import { onMount } from "svelte";
+
   let todos: Array<{ text: string; completed: boolean }> = [];
   let text = "";
+  onMount(() => {
+    // Handle messages sent from the extension to the webview
+    window.addEventListener("message", (event) => {
+      const message = event.data; // The json data that the extension sent
+      console.log({ message });
+      switch (message.type) {
+        case "new-todo":
+          // Split the message.value by \r\n, \n, or \r
+          const lines = message.value
+            .split(/\r?\n|\r/)
+            .filter((line: string) => line.trim() !== "");
+
+          lines.forEach((line: string) => {
+            todos = [{ text: line, completed: false }, ...todos];
+          });
+          break;
+      }
+    });
+  });
 </script>
 
 <form
@@ -14,7 +35,7 @@
 </form>
 
 <ul>
-  {#each todos as todo (todo.text)}
+  {#each todos as todo, index (index)}
     <li>
       <button
         type="button"
@@ -34,7 +55,7 @@
 <button
   on:click={() => {
     vscodeapi.postMessage({
-      command: "onInfo",
+      type: "onInfo",
       value: "info message",
     });
   }}
@@ -45,7 +66,7 @@
 <button
   on:click={() => {
     vscodeapi.postMessage({
-      command: "onError",
+      type: "onError",
       value: "info message",
     });
   }}

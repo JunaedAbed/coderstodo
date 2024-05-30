@@ -47,6 +47,11 @@
         "command": "coderstodo.refresh",
         "category": "CodersTodo",
         "title": "Refresh"
+      },
+      {
+        "command": "coderstodo.addTodo",
+        "category": "CodersTodo",
+        "title": "Add Todo From Selection"
       }
     ]
   },
